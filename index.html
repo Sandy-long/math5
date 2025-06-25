@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>趣味数学2 - 间隔问题与错中求解</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+            font-size: 1.8em;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 25px;
+            border-left: 4px solid #3498db;
+            padding-left: 8px;
+            font-size: 1.4em;
+        }
+        h3 {
+            color: #16a085;
+            margin-top: 18px;
+            font-size: 1.2em;
+        }
+        .section {
+            background-color: white;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .question {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-top: 12px;
+            font-size: 0.95em;
+        }
+        .answer {
+            color: #27ae60;
+            margin-bottom: 12px;
+            padding-left: 15px;
+            border-left: 2px solid #2ecc71;
+            font-size: 0.95em;
+        }
+        .rule {
+            background-color: #f1f9fe;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin: 8px 0;
+            border-left: 3px solid #3498db;
+            font-size: 0.95em;
+        }
+        .example {
+            background-color: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 8px 0;
+        }
+        
+        /* 锯木头动画 */
+        .saw-animation {
+            width: 100%;
+            height: 120px;
+            position: relative;
+            margin: 15px auto;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .log {
+            width: 80%;
+            height: 30px;
+            background: linear-gradient(to right, #8B4513, #A0522D);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .saw {
+            width: 25px;
+            height: 30px;
+            background-color: #ccc;
+            position: absolute;
+            top: 50%;
+            left: 30%;
+            transform: translateY(-50%);
+            border-radius: 3px;
+            animation: sawing 2.5s infinite ease-in-out;
+            z-index: 2;
+        }
+        
+        .saw-blade {
+            width: 100%;
+            height: 8px;
+            background-color: #555;
+            position: absolute;
+            bottom: 0;
+            border-radius: 0 0 3px 3px;
+        }
+        
+        .cut-line {
+            width: 2px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.7);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: cutting 2.5s infinite ease-in-out;
+            z-index: 1;
+        }
+        
+        @keyframes sawing {
+            0%, 100% { left: 30%; }
+            50% { left: 70%; }
+        }
+        
+        @keyframes cutting {
+            0%, 100% { opacity: 0; }
+            45%, 55% { opacity: 1; }
+        }
+        
+        /* 爬楼梯动画 */
+        .stairs-animation {
+            width: 100%;
+            height: 150px;
+            position: relative;
+            margin: 15px auto;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .stairs {
+            width: 80%;
+            height: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .step {
+            width: 100%;
+            height: 20px;
+            background-color: #888;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .person {
+            width: 20px;
+            height: 30px;
+            background-color: #3498db;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            animation: climbing 3s infinite ease-in-out;
+        }
+        
+        @keyframes climbing {
+            0% { bottom: 0; left: 10%; }
+            25% { bottom: 30px; left: 30%; }
+            50% { bottom: 60px; left: 50%; }
+            75% { bottom: 90px; left: 70%; }
+            100% { bottom: 120px; left: 90%; }
+        }
+        
+        /* 数字看错动画 */
+        .number-mistake-animation {
+            width: 100%;
+            height: 120px;
+            position: relative;
+            margin: 15px auto;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .number-container {
+            position: relative;
+            width: 60px;
+            height: 80px;
+        }
+        
+        .number {
+            font-size: 60px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: numberChange 3s infinite;
+        }
+        
+        .number-6 { color: #e74c3c; }
+        .number-9 { color: #3498db; }
+        
+        @keyframes numberChange {
+            0%, 40% { opacity: 1; transform: scale(1); }
+            50%, 90% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        /* 并行任务动画 */
+        .parallel-tasks-animation {
+            width: 100%;
+            height: 120px;
+            position: relative;
+            margin: 15px auto;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .task {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .task-1 {
+            background-color: #e74c3c;
+            top: 20%;
+            left: 20%;
+            animation: task1 4s infinite;
+        }
+        
+        .task-2 {
+            background-color: #3498db;
+            top: 20%;
+            right: 20%;
+            animation: task2 4s infinite;
+        }
+        
+        .clock {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            border: 3px solid #2ecc71;
+            border-radius: 50%;
+        }
+        
+        .clock-hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            width: 2px;
+            height: 25px;
+            background-color: #2ecc71;
+            transform-origin: bottom;
+            animation: clock 4s infinite linear;
+        }
+        
+        @keyframes task1 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(20px); }
+        }
+        
+        @keyframes task2 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(20px); }
+        }
+        
+        @keyframes clock {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 排队动画 */
+        .queue-animation {
+            width: 100%;
+            height: 120px;
+            position: relative;
+            margin: 15px auto;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .person-in-line {
+            width: 30px;
+            height: 50px;
+            background-color: #3498db;
+            border-radius: 5px;
+            margin-right: 5px;
+            position: relative;
+            display: inline-block;
+            animation: queueMove 3s infinite;
+        }
+        
+        .person-in-line:nth-child(2) {
+            background-color: #e74c3c;
+            animation-delay: 0.3s;
+        }
+        
+        .person-in-line:nth-child(3) {
+            background-color: #2ecc71;
+            animation-delay: 0.6s;
+        }
+        
+        .person-in-line:nth-child(4) {
+            background-color: #f39c12;
+            animation-delay: 0.9s;
+        }
+        
+        @keyframes queueMove {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* 统计图表动画 */
+        .chart-animation {
+            width: 100%;
+            height: 120px;
+            position: relative;
+            margin: 15px auto;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 0 20px;
+        }
+        
+        .bar {
+            width: 30px;
+            background-color: #3498db;
+            margin: 0 5px;
+            position: relative;
+            animation: grow 2s infinite alternate;
+        }
+        
+        .bar:nth-child(1) { height: 30%; animation-delay: 0s; }
+        .bar:nth-child(2) { height: 60%; animation-delay: 0.2s; }
+        .bar:nth-child(3) { height: 40%; animation-delay: 0.4s; }
+        .bar:nth-child(4) { height: 80%; animation-delay: 0.6s; }
+        .bar:nth-child(5) { height: 50%; animation-delay: 0.8s; }
+        
+        @keyframes grow {
+            0% { height: 10%; }
+            100% { height: var(--target-height); }
+        }
+        
+        /* 天平动画 */
+        .balance-animation {
+            width: 100%;
+            height: 120px;
+            position: relative;
+            margin: 15px auto;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .balance-base {
+            width: 20px;
+            height: 60px;
+            background-color: #555;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .balance-beam {
+            width: 150px;
+            height: 5px;
+            background-color: #777;
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: balance 3s infinite ease-in-out;
+        }
+        
+        .pan {
+            width: 40px;
+            height: 10px;
+            background-color: #888;
+            border-radius: 3px;
+            position: absolute;
+            bottom: 70px;
+        }
+        
+        .left-pan { left: calc(50% - 70px); }
+        .right-pan { right: calc(50% - 70px); }
+        
+        .weight {
+            width: 20px;
+            height: 20px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        @keyframes balance {
+            0%, 100% { transform: translateX(-50%) rotate(0deg); }
+            25% { transform: translateX(-50%) rotate(-5deg); }
+            50% { transform: translateX(-50%) rotate(0deg); }
+            75% { transform: translateX(-50%) rotate(5deg); }
+        }
+		 .balance-animation {
+            width: 100%;
+            height: 150px;
+            position: relative;
+            margin: 15px auto;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .balance-stand {
+            width: 10px;
+            height: 80px;
+            background-color: #555;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .balance-beam {
+            width: 150px;
+            height: 4px;
+            background-color: #777;
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform-origin: center;
+            transform: translateX(-50%) rotate(0deg);
+            animation: balanceBeam 4s infinite ease-in-out;
+        }
+        
+        .balance-pan {
+            width: 40px;
+            height: 10px;
+            background-color: #888;
+            border-radius: 2px;
+            position: absolute;
+            bottom: 90px;
+        }
+        
+        .left-pan {
+            left: calc(50% - 80px);
+        }
+        
+        .right-pan {
+            right: calc(50% - 80px);
+        }
+        
+        .weight {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 70px;
+        }
+        
+        .left-weight {
+            left: calc(50% - 70px);
+            background-color: #e74c3c;
+            animation: leftWeight 4s infinite ease-in-out;
+        }
+        
+        .right-weight {
+            right: calc(50% - 70px);
+            background-color: #3498db;
+            animation: rightWeight 4s infinite ease-in-out;
+        }
+        
+        @keyframes balanceBeam {
+            0%, 100% { transform: translateX(-50%) rotate(0deg); }
+            25% { transform: translateX(-50%) rotate(5deg); }
+            50% { transform: translateX(-50%) rotate(0deg); }
+            75% { transform: translateX(-50%) rotate(-5deg); }
+        }
+        
+        @keyframes leftWeight {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(5px); }
+            50% { transform: translateY(0); }
+            75% { transform: translateY(5px); }
+        }
+        
+        @keyframes rightWeight {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(5px); }
+            50% { transform: translateY(0); }
+            75% { transform: translateY(5px); }
+        }
+    </style>
+</head>
+<body>
+    <h1>趣味数学2 - 间隔问题与错中求解</h1>
+    
+    <div class="section">
+        <h2>锯木头问题</h2>
+        
+        <div class="saw-animation">
+            <div class="log"></div>
+            <div class="saw">
+                <div class="saw-blade"></div>
+            </div>
+            <div class="cut-line"></div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong><br>
+            1. 将一根木头锯成n段需要(n-1)次切割<br>
+            2. 总时间 = 切割次数 × 每次耗时<br>
+            3. 多人同时操作可以并行优化时间
+        </div>
+        
+        <div class="example">
+            <div class="question">将木头锯成5段，每次锯切需要2分钟，总共需要多少时间？</div>
+            <div class="answer">(5-1)×2 = 8分钟</div>
+            
+            <div class="question">锯切一根木头7次，可以得到多少段木头？</div>
+            <div class="answer">7+1 = 8段</div>
+            
+            <div class="question">工人用3分钟锯一次，要得到10段木头，最少需要多少分钟？</div>
+            <div class="answer">(10-1)×3 = 27分钟</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>爬楼梯问题</h2>
+        
+        <div class="stairs-animation">
+            <div class="stairs">
+                <div class="step"></div>
+                <div class="step"></div>
+                <div class="step"></div>
+                <div class="step"></div>
+                <div class="step"></div>
+            </div>
+            <div class="person"></div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong><br>
+            1. 爬的层数 = 终点楼层 - 起点楼层<br>
+            2. 总时间 = 爬的层数 × 每层耗时<br>
+            3. 下楼时计算方法相同
+        </div>
+        
+        <div class="example">
+            <div class="question">从1楼到6楼，每层需要30秒，总共需要多少时间？</div>
+            <div class="answer">(6-1)×30 = 150秒 = 2分30秒</div>
+            
+            <div class="question">从3楼到9楼，每层耗时45秒，需要多少时间？</div>
+            <div class="answer">(9-3)×45 = 270秒 = 4分30秒</div>
+            
+            <div class="question">从8楼下到1楼，每层需要20秒，总共需要多少时间？</div>
+            <div class="answer">(8-1)×20 = 140秒 = 2分20秒</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>数字看错问题</h2>
+        
+        <div class="number-mistake-animation">
+            <div class="number-container">
+                <div class="number number-6">6</div>
+                <div class="number number-9">9</div>
+            </div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong><br>
+            1. 确定看错的位数（个位、十位等）<br>
+            2. 计算看错数字与原数字的差值<br>
+            3. 根据运算类型（加、减、乘、除）调整结果<br>
+            4. 个位看错：差值 = 看错数字 - 原数字<br>
+            5. 十位看错：差值 = (看错数字 - 原数字)×10
+        </div>
+        
+        <div class="example">
+            <div class="question">小明把加数个位上的3看成了8，结果多了多少？正确的和应该是多少？</div>
+            <div class="answer">多了(8-3)=5；正确和=错误和-5</div>
+            
+            <div class="question">小红把被减数十位上的5看成了8，差多了多少？</div>
+            <div class="answer">多了(8-5)×10=30</div>
+            
+            <div class="question">小刚把因数个位上的9看成了6，积会减少多少？</div>
+            <div class="answer">减少=(9-6)×另一个因数</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>并行任务问题</h2>
+        
+        <div class="parallel-tasks-animation">
+            <div class="task task-1">A</div>
+            <div class="task task-2">B</div>
+            <div class="clock">
+                <div class="clock-hand"></div>
+            </div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong><br>
+            1. 可以同时进行的任务，总时间取最长任务时间<br>
+            2. 不能同时进行的任务，总时间为各任务时间之和<br>
+            3. 合理安排任务顺序可以节省总时间
+        </div>
+        
+        <div class="example">
+            <div class="question">煮饭需要30分钟，炒菜需要20分钟，可以同时进行，最少需要多少时间？</div>
+            <div class="answer">max(30,20)=30分钟</div>
+            
+            <div class="question">洗衣服40分钟，拖地25分钟，不能同时做，总共需要多少时间？</div>
+            <div class="answer">40+25=65分钟</div>
+            
+            <div class="question">烧水15分钟，整理书包5分钟，可以同时进行，最少需要多少时间？</div>
+            <div class="answer">max(15,5)=15分钟</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>排队问题</h2>
+        
+        <div class="queue-animation">
+            <div class="person-in-line"></div>
+            <div class="person-in-line"></div>
+            <div class="person-in-line"></div>
+            <div class="person-in-line"></div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong><br>
+            1. 队伍总人数 = 前面人数 + 自己 + 后面人数<br>
+            2. 两人中间人数 = 位置差 - 1<br>
+            3. 从前面数第n个 = 位置n<br>
+            4. 从后面数第m个 = 总人数 - m + 1
+        </div>
+        
+        <div class="example">
+            <div class="question">小丽前面有5人，后面有7人，队伍共有多少人？</div>
+            <div class="answer">5+1+7=13人</div>
+            
+            <div class="question">小明排第8，他前面有多少人？</div>
+            <div class="answer">8-1=7人</div>
+            
+            <div class="question">小红从前面数是第4，从后面数是第6，队伍共有多少人？</div>
+            <div class="answer">4+6-1=9人</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>统计图表问题</h2>
+        
+        <div class="chart-animation">
+            <div class="bar" style="--target-height: 30%;"></div>
+            <div class="bar" style="--target-height: 60%;"></div>
+            <div class="bar" style="--target-height: 40%;"></div>
+            <div class="bar" style="--target-height: 80%;"></div>
+            <div class="bar" style="--target-height: 50%;"></div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong><br>
+            1. 比较柱状图高度或饼图比例<br>
+            2. 计算各部分之间的差值或倍数关系<br>
+            3. 总数 = 各部分数量之和<br>
+            4. 比例 = 部分数量 / 总数
+        </div>
+        
+        <div class="example">
+            <div class="question">图表显示A班30人，B班是A班的1.5倍，B班有多少人？</div>
+            <div class="answer">30×1.5=45人</div>
+            
+            <div class="question">三班共120人，图表显示C班占25%，C班有多少人？</div>
+            <div class="answer">120×25%=30人</div>
+            
+            <div class="question">图表中最高柱代表50，最低柱代表20，相差多少？</div>
+            <div class="answer">50-20=30</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>天平平衡问题</h2>
+        
+        
+        <div class="balance-animation">
+            <div class="balance-stand"></div>
+            <div class="balance-beam"></div>
+           
+            
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong><br>
+            1. 天平平衡时：左边重量 = 右边重量<br>
+            2. 不平衡时：较重的一边下沉<br>
+            3. 利用已知重量推导未知重量<br>
+            4. 比例关系：A/B = C/D
+        </div>
+        
+        <div class="example">
+            <div class="question">天平左边2个苹果，右边6个草莓，已知1个苹果=3个草莓，天平会怎样？</div>
+            <div class="answer">左边=2×3=6个草莓重量=右边，天平平衡</div>
+            
+            <div class="question">1个西瓜等于4个菠萝，1个菠萝等于3个苹果，1个西瓜等于多少个苹果？</div>
+            <div class="answer">4×3=12个苹果</div>
+            
+            <div class="question">天平左边3个方块，右边9个球，方块和球的重量比是多少？</div>
+            <div class="answer">1个方块=3个球</div>
+        </div>
+    </div>
+</body>
+</html>
