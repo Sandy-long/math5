@@ -377,66 +377,6 @@
         /* 天平动画 */
         .balance-animation {
             width: 100%;
-            height: 120px;
-            position: relative;
-            margin: 15px auto;
-            background-color: #f5f5f5;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .balance-base {
-            width: 20px;
-            height: 60px;
-            background-color: #555;
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .balance-beam {
-            width: 150px;
-            height: 5px;
-            background-color: #777;
-            position: absolute;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: balance 3s infinite ease-in-out;
-        }
-        
-        .pan {
-            width: 40px;
-            height: 10px;
-            background-color: #888;
-            border-radius: 3px;
-            position: absolute;
-            bottom: 70px;
-        }
-        
-        .left-pan { left: calc(50% - 70px); }
-        .right-pan { right: calc(50% - 70px); }
-        
-        .weight {
-            width: 20px;
-            height: 20px;
-            background-color: #e74c3c;
-            border-radius: 50%;
-            position: absolute;
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        @keyframes balance {
-            0%, 100% { transform: translateX(-50%) rotate(0deg); }
-            25% { transform: translateX(-50%) rotate(-5deg); }
-            50% { transform: translateX(-50%) rotate(0deg); }
-            75% { transform: translateX(-50%) rotate(5deg); }
-        }
-		 .balance-animation {
-            width: 100%;
             height: 150px;
             position: relative;
             margin: 15px auto;
@@ -548,14 +488,14 @@
         </div>
         
         <div class="example">
-            <div class="question">将木头锯成5段，每次锯切需要2分钟，总共需要多少时间？</div>
-            <div class="answer"8分钟</div>
+            <div class="question">将一根木头锯成3段，每次锯切需要4分钟，总共需要多少时间？</div>
+            <div class="answer">8分钟</div>
             
-            <div class="question">锯切一根木头7次，可以得到多少段木头？</div>
-            <div class="answer">8段</div>
+            <div class="question">工人用5分钟锯一次，要得到7段木头，最少需要多少分钟？</div>
+            <div class="answer">30分钟</div>
             
-            <div class="question">工人用3分钟锯一次，要得到10段木头，最少需要多少分钟？</div>
-            <div class="answer" 27分钟</div>
+            <div class="question">将一根木头锯成8段，每次锯切需要3分钟，但每次锯完后需要休息1分钟。总共需要多少时间？</div>
+            <div class="answer">27分钟</div>
         </div>
     </div>
     
@@ -581,14 +521,14 @@
         </div>
         
         <div class="example">
-            <div class="question">从1楼到6楼，每层需要30秒，总共需要多少时间？</div>
-            <div class="answer">2分30秒</div>
+            <div class="question">小明从1楼爬到5楼，每层需要30秒，共需多少时间？</div>
+            <div class="answer">2分钟</div>
             
-            <div class="question">从3楼到9楼，每层耗时45秒，需要多少时间？</div>
-            <div class="answer"> 4分30秒</div>
+            <div class="question">小刚从1楼到6楼（上楼每层30秒），再返回到2楼（下楼每层20秒），共需多少时间？</div>
+            <div class="answer">3分50秒</div>
             
-            <div class="question">从8楼下到1楼，每层需要20秒，总共需要多少时间？</div>
-            <div class="answer"140秒 = 2分20秒</div>
+            <div class="question">电梯从1楼到10楼，每层移动+开关门共40秒，但双数层不停，共需多少时间？</div>
+            <div class="answer">3分20秒</div>
         </div>
     </div>
     
@@ -612,137 +552,18 @@
         </div>
         
         <div class="example">
-            <div class="question">小明把加数个位上的3看成了8，结果多了多少？正确的和应该是多少？</div>
-            <div class="answer">多了5；错误和-5</div>
+            <div class="question">小明在计算加法时，把加数个位上的3看成了8，结果和是47。正确的和应该是多少？</div>
+            <div class="answer">42</div>
             
-            <div class="question">小红把被减数十位上的5看成了8，差多了多少？</div>
-            <div class="answer">30</div>
+            <div class="question">小丽把被减数十位上的5看成了8，错误差是63，正确的差是多少？</div>
+            <div class="answer">93</div>
             
-            <div class="question">小刚把因数个位上的9看成了6，积会减少多少？</div>
-            <div class="answer">减少=(9-6)×另一个因数</div>
+            <div class="question">小强计算12×15时，把因数15的个位5看成了8，错误的积是多少？正确的积呢？</div>
+            <div class="answer">36，180</div>
         </div>
     </div>
     
-    <div class="section">
-        <h2>并行任务问题</h2>
-        
-        <div class="parallel-tasks-animation">
-            <div class="task task-1">A</div>
-            <div class="task task-2">B</div>
-            <div class="clock">
-                <div class="clock-hand"></div>
-            </div>
-        </div>
-        
-        <div class="rule">
-            <strong>运算法则：</strong><br>
-            1. 可以同时进行的任务，总时间取最长任务时间<br>
-            2. 不能同时进行的任务，总时间为各任务时间之和<br>
-            3. 合理安排任务顺序可以节省总时间
-        </div>
-        
-        <div class="example">
-            <div class="question">煮饭需要30分钟，炒菜需要20分钟，可以同时进行，最少需要多少时间？</div>
-            <div class="answer"30分钟</div>
-            
-            <div class="question">洗衣服40分钟，拖地25分钟，不能同时做，总共需要多少时间？</div>
-            <div class="answer"65分钟</div>
-            
-            <div class="question">烧水15分钟，整理书包5分钟，可以同时进行，最少需要多少时间？</div>
-            <div class="answer"15分钟</div>
-        </div>
-    </div>
-    
-    <div class="section">
-        <h2>排队问题</h2>
-        
-        <div class="queue-animation">
-            <div class="person-in-line"></div>
-            <div class="person-in-line"></div>
-            <div class="person-in-line"></div>
-            <div class="person-in-line"></div>
-        </div>
-        
-        <div class="rule">
-            <strong>运算法则：</strong><br>
-            1. 队伍总人数 = 前面人数 + 自己 + 后面人数<br>
-            2. 两人中间人数 = 位置差 - 1<br>
-            3. 从前面数第n个 = 位置n<br>
-            4. 从后面数第m个 = 总人数 - m + 1
-        </div>
-        
-        <div class="example">
-            <div class="question">小丽前面有5人，后面有7人，队伍共有多少人？</div>
-            <div class="answer"13人</div>
-            
-            <div class="question">小明排第8，他前面有多少人？</div>
-            <div class="answer"7人</div>
-            
-            <div class="question">小红从前面数是第4，从后面数是第6，队伍共有多少人？</div>
-            <div class="answer"9人</div>
-        </div>
-    </div>
-    
-    <div class="section">
-        <h2>统计图表问题</h2>
-        
-        <div class="chart-animation">
-            <div class="bar" style="--target-height: 30%;"></div>
-            <div class="bar" style="--target-height: 60%;"></div>
-            <div class="bar" style="--target-height: 40%;"></div>
-            <div class="bar" style="--target-height: 80%;"></div>
-            <div class="bar" style="--target-height: 50%;"></div>
-        </div>
-        
-        <div class="rule">
-            <strong>运算法则：</strong><br>
-            1. 比较柱状图高度或饼图比例<br>
-            2. 计算各部分之间的差值或倍数关系<br>
-            3. 总数 = 各部分数量之和<br>
-            4. 比例 = 部分数量 / 总数
-        </div>
-        
-        <div class="example">
-            <div class="question">图表显示A班30人，B班是A班的1.5倍，B班有多少人？</div>
-            <div class="answer"45人</div>
-            
-            <div class="question">三班共120人，图表显示C班占25%，C班有多少人？</div>
-            <div class="answer"30人</div>
-            
-            <div class="question">图表中最高柱代表50，最低柱代表20，相差多少？</div>
-            <div class="answer"30</div>
-        </div>
-    </div>
-    
-    <div class="section">
-        <h2>天平平衡问题</h2>
-        
-        
-        <div class="balance-animation">
-            <div class="balance-stand"></div>
-            <div class="balance-beam"></div>
-           
-            
-        </div>
-        
-        <div class="rule">
-            <strong>运算法则：</strong><br>
-            1. 天平平衡时：左边重量 = 右边重量<br>
-            2. 不平衡时：较重的一边下沉<br>
-            3. 利用已知重量推导未知重量<br>
-            4. 比例关系：A/B = C/D
-        </div>
-        
-        <div class="example">
-            <div class="question">天平左边2个苹果，右边6个草莓，已知1个苹果=3个草莓，天平会怎样？</div>
-            <div class="answer"天平平衡</div>
-            
-            <div class="question">1个西瓜等于4个菠萝，1个菠萝等于3个苹果，1个西瓜等于多少个苹果？</div>
-            <div class="answer"12个</div>
-            
-            <div class="question">天平左边3个方块，右边9个球，方块和球的重量比是多少？</div>
-            <div class="answer">1个方块=3个球</div>
-        </div>
+   
     </div>
 </body>
 </html>
