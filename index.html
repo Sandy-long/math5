@@ -43,16 +43,54 @@
         }
         .question {
             font-weight: bold;
-            color: #e74c3c;
-            margin-top: 12px;
+            color: #e74c3c; /* 红色问题文本 */
+            margin: 15px 0 5px 0;
             font-size: 0.95em;
+            cursor: pointer; /* 添加指针提示可点击 */
+        }
+        /* 答案区域样式 */
+        .answer-container {
+            background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+            border: 1px solid #d1fae5;
+            border-radius: 8px;
+            padding: 5px 15px;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .answer-container:hover {
+            background: linear-gradient(135deg, #dcffe4 0%, #c6f6d5 100%);
+            transform: translateX(5px);
+        }
+        .answer-prompt {
+            color: #10b981;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+        }
+        .answer-prompt:before {
+            content: "✨";
+            margin-right: 10px;
+            font-size: 1.2em;
         }
         .answer {
             color: #27ae60;
-            margin-bottom: 12px;
-            padding-left: 15px;
-            border-left: 2px solid #2ecc71;
-            font-size: 0.95em;
+            margin-left: 20px;
+            padding: 10px 15px;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid #10b981;
+            border-radius: 0 8px 8px 0;
+            display: none;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease;
+        }
+        .show-answer .answer {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .rule {
             background-color: #f1f9fe;
@@ -220,250 +258,6 @@
             50%, 90% { opacity: 0; transform: scale(0.5); }
             100% { opacity: 1; transform: scale(1); }
         }
-        
-        /* 并行任务动画 */
-        .parallel-tasks-animation {
-            width: 100%;
-            height: 120px;
-            position: relative;
-            margin: 15px auto;
-            background-color: #f5f5f5;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .task {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            color: white;
-        }
-        
-        .task-1 {
-            background-color: #e74c3c;
-            top: 20%;
-            left: 20%;
-            animation: task1 4s infinite;
-        }
-        
-        .task-2 {
-            background-color: #3498db;
-            top: 20%;
-            right: 20%;
-            animation: task2 4s infinite;
-        }
-        
-        .clock {
-            position: absolute;
-            bottom: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 60px;
-            border: 3px solid #2ecc71;
-            border-radius: 50%;
-        }
-        
-        .clock-hand {
-            position: absolute;
-            bottom: 50%;
-            left: 50%;
-            width: 2px;
-            height: 25px;
-            background-color: #2ecc71;
-            transform-origin: bottom;
-            animation: clock 4s infinite linear;
-        }
-        
-        @keyframes task1 {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(20px); }
-        }
-        
-        @keyframes task2 {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(20px); }
-        }
-        
-        @keyframes clock {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* 排队动画 */
-        .queue-animation {
-            width: 100%;
-            height: 120px;
-            position: relative;
-            margin: 15px auto;
-            background-color: #f5f5f5;
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .person-in-line {
-            width: 30px;
-            height: 50px;
-            background-color: #3498db;
-            border-radius: 5px;
-            margin-right: 5px;
-            position: relative;
-            display: inline-block;
-            animation: queueMove 3s infinite;
-        }
-        
-        .person-in-line:nth-child(2) {
-            background-color: #e74c3c;
-            animation-delay: 0.3s;
-        }
-        
-        .person-in-line:nth-child(3) {
-            background-color: #2ecc71;
-            animation-delay: 0.6s;
-        }
-        
-        .person-in-line:nth-child(4) {
-            background-color: #f39c12;
-            animation-delay: 0.9s;
-        }
-        
-        @keyframes queueMove {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        /* 统计图表动画 */
-        .chart-animation {
-            width: 100%;
-            height: 120px;
-            position: relative;
-            margin: 15px auto;
-            background-color: #f5f5f5;
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            padding: 0 20px;
-        }
-        
-        .bar {
-            width: 30px;
-            background-color: #3498db;
-            margin: 0 5px;
-            position: relative;
-            animation: grow 2s infinite alternate;
-        }
-        
-        .bar:nth-child(1) { height: 30%; animation-delay: 0s; }
-        .bar:nth-child(2) { height: 60%; animation-delay: 0.2s; }
-        .bar:nth-child(3) { height: 40%; animation-delay: 0.4s; }
-        .bar:nth-child(4) { height: 80%; animation-delay: 0.6s; }
-        .bar:nth-child(5) { height: 50%; animation-delay: 0.8s; }
-        
-        @keyframes grow {
-            0% { height: 10%; }
-            100% { height: var(--target-height); }
-        }
-        
-        /* 天平动画 */
-        .balance-animation {
-            width: 100%;
-            height: 150px;
-            position: relative;
-            margin: 15px auto;
-            background-color: #f5f5f5;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .balance-stand {
-            width: 10px;
-            height: 80px;
-            background-color: #555;
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .balance-beam {
-            width: 150px;
-            height: 4px;
-            background-color: #777;
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            transform-origin: center;
-            transform: translateX(-50%) rotate(0deg);
-            animation: balanceBeam 4s infinite ease-in-out;
-        }
-        
-        .balance-pan {
-            width: 40px;
-            height: 10px;
-            background-color: #888;
-            border-radius: 2px;
-            position: absolute;
-            bottom: 90px;
-        }
-        
-        .left-pan {
-            left: calc(50% - 80px);
-        }
-        
-        .right-pan {
-            right: calc(50% - 80px);
-        }
-        
-        .weight {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            position: absolute;
-            bottom: 70px;
-        }
-        
-        .left-weight {
-            left: calc(50% - 70px);
-            background-color: #e74c3c;
-            animation: leftWeight 4s infinite ease-in-out;
-        }
-        
-        .right-weight {
-            right: calc(50% - 70px);
-            background-color: #3498db;
-            animation: rightWeight 4s infinite ease-in-out;
-        }
-        
-        @keyframes balanceBeam {
-            0%, 100% { transform: translateX(-50%) rotate(0deg); }
-            25% { transform: translateX(-50%) rotate(5deg); }
-            50% { transform: translateX(-50%) rotate(0deg); }
-            75% { transform: translateX(-50%) rotate(-5deg); }
-        }
-        
-        @keyframes leftWeight {
-            0%, 100% { transform: translateY(0); }
-            25% { transform: translateY(5px); }
-            50% { transform: translateY(0); }
-            75% { transform: translateY(5px); }
-        }
-        
-        @keyframes rightWeight {
-            0%, 100% { transform: translateY(0); }
-            25% { transform: translateY(5px); }
-            50% { transform: translateY(0); }
-            75% { transform: translateY(5px); }
-        }
     </style>
 </head>
 <body>
@@ -489,13 +283,22 @@
         
         <div class="example">
             <div class="question">将一根木头锯成3段，每次锯切需要4分钟，总共需要多少时间？</div>
-            <div class="answer">8分钟</div>
+            <div class="answer-container">
+                <div class="answer-prompt">点击显示答案</div>
+                <div class="answer">8分钟</div>
+            </div>
             
             <div class="question">工人用5分钟锯一次，要得到7段木头，最少需要多少分钟？</div>
-            <div class="answer">30分钟</div>
+            <div class="answer-container">
+                <div class="answer-prompt">点击显示答案</div>
+                <div class="answer">30分钟</div>
+            </div>
             
             <div class="question">将一根木头锯成8段，每次锯切需要3分钟，但每次锯完后需要休息1分钟。总共需要多少时间？</div>
-            <div class="answer">27分钟</div>
+            <div class="answer-container">
+                <div class="answer-prompt">点击显示答案</div>
+                <div class="answer">27分钟</div>
+            </div>
         </div>
     </div>
     
@@ -522,13 +325,22 @@
         
         <div class="example">
             <div class="question">小明从1楼爬到5楼，每层需要30秒，共需多少时间？</div>
-            <div class="answer">2分钟</div>
+            <div class="answer-container">
+                <div class="answer-prompt">点击显示答案</div>
+                <div class="answer">2分钟</div>
+            </div>
             
             <div class="question">小刚从1楼到6楼（上楼每层30秒），再返回到2楼（下楼每层20秒），共需多少时间？</div>
-            <div class="answer">3分50秒</div>
+            <div class="answer-container">
+                <div class="answer-prompt">点击显示答案</div>
+                <div class="answer">3分50秒</div>
+            </div>
             
             <div class="question">电梯从1楼到10楼，每层移动+开关门共40秒，但双数层不停，共需多少时间？</div>
-            <div class="answer">3分20秒</div>
+            <div class="answer-container">
+                <div class="answer-prompt">点击显示答案</div>
+                <div class="answer">3分20秒</div>
+            </div>
         </div>
     </div>
     
@@ -553,17 +365,34 @@
         
         <div class="example">
             <div class="question">小明在计算加法时，把加数个位上的3看成了8，结果和是47。正确的和应该是多少？</div>
-            <div class="answer">42</div>
+            <div class="answer-container">
+                <div class="answer-prompt">点击显示答案</div>
+                <div class="answer">42</div>
+            </div>
             
             <div class="question">小丽把被减数十位上的5看成了8，错误差是63，正确的差是多少？</div>
-            <div class="answer">93</div>
+            <div class="answer-container">
+                <div class="answer-prompt">点击显示答案</div>
+                <div class="answer">93</div>
+            </div>
             
             <div class="question">小强计算12×15时，把因数15的个位5看成了8，错误的积是多少？正确的积呢？</div>
-            <div class="answer">36，180</div>
+            <div class="answer-container">
+                <div class="answer-prompt">点击显示答案</div>
+                <div class="answer">36，180</div>
+            </div>
         </div>
     </div>
     
-   
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const containers = document.querySelectorAll('.answer-container');
+            containers.forEach(container => {
+                container.addEventListener('click', function() {
+                    this.classList.toggle('show-answer');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
